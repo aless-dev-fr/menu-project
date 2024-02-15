@@ -1,45 +1,33 @@
+import { FoodsQueryHookResult, useFoodsQuery } from "@/packages/generated/graphql";
+import { MyMenuItemContext } from "@/packages/hooks/use-data-context";
+import { useContext } from "react";
+import { Spinner } from "@material-tailwind/react";
 
 export default function Home() {
 
-  const handleButtonListClick = function() {
+    const { data, functions } = useContext(MyMenuItemContext);
 
-    const requestData = {
-      query: `
-      query {
-        foods {
-          id
-          Name
-          Description
-          Country
-          Price
-        }
-      }
-      `
-    };
+    const { data: foodsData, loading: foodsLoading, error: foodsError } : FoodsQueryHookResult = useFoodsQuery({});
 
-    fetch(`http://localhost:3000/api/foods`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestData),
-    }).then((response) => response.json()).then((data) => console.log(data))
-  }
+    if (foodsLoading)
+    {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div role="status">
+                    <Spinner color="green" className="h-12 w-12" />
+                </div>
+            </div>
+        );
+    }
 
-  const handleButtonAddClick = function() {
-    fetch(" http://localhost:3000/api/food",{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name : "name", description : "description", price : 120, country : "country" }),
-    }).then((response) => response.json()).then((data) => console.log(data))
-  }
-
-  return (
-    <>
-      <button onClick={handleButtonListClick}>list</button>
-      <button onClick={handleButtonAddClick}>add</button>
-    </>
-  );
+    return (
+        <div className="flex h-screen">
+            <div className="w-screen h-full flex justify-center items-center">
+                
+            </div>
+            <div className="w-screen h-full flex justify-center items-center">
+               
+            </div>
+        </div>
+    );
 }

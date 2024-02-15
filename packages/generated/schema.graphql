@@ -1,0 +1,18 @@
+
+type MenuItem {
+    id: ID
+    createdAt: String!
+    updatedAt: String!
+    Name: String!
+    Description: String
+    Country: String
+    Price: Int!
+}
+
+type Mutation {
+    deleteFood(id: ID!): MenuItem!
+}
+
+type Query {
+    foods: [MenuItem]
+}

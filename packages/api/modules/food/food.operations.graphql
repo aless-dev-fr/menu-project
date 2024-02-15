@@ -1,0 +1,16 @@
+
+query foods {
+  foods {
+    id
+    Name
+    Description
+    Country
+    Price
+  }
+}
+
+mutation seleteFood($id: ID!) {
+  deleteFood(id: $id) {
+    Name
+  }
+}

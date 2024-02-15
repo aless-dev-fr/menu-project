@@ -1,4 +1,4 @@
-import { foods } from "./food.resolver";
+import { deleteFood, foods } from "./food.resolver";
 
 import { mergeTypeDefs } from "@graphql-tools/merge"
 
@@ -6,6 +6,10 @@ import { createModule, gql } from "graphql-modules"
 
 const typeDefs = mergeTypeDefs([
     gql`
+      type Mutation {
+        deleteFood(id: ID!): MenuItem!
+      }
+
       type MenuItem {
         id: ID
         createdAt: String!
@@ -26,6 +30,9 @@ const typeDefs = mergeTypeDefs([
 const resolvers = {
     Query: {
       foods
+    },
+    Mutation: {
+      deleteFood
     }
 }
 
