@@ -3,7 +3,6 @@ import { graphqlModule } from "../modules";
 import { createApplication } from "graphql-modules"
 import { NextApiRequest, NextApiResponse } from "next";
 import { applyMiddleware } from "graphql-middleware"
-import { contextFn as contextFunction } from "./context-fn";
   
 
 export const application = createApplication({

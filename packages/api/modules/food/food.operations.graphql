@@ -9,8 +9,12 @@ query foods {
   }
 }
 
-mutation seleteFood($id: ID!) {
-  deleteFood(id: $id) {
+mutation createMenuItem($input: MenuItemInput!) {
+  createMenuItem(input: $input) {
+    id
     Name
+    Description
+    Country
+    Price
   }
 }

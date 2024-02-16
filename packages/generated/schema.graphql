@@ -9,8 +9,15 @@ type MenuItem {
     Price: Int!
 }
 
+input MenuItemInput {
+    Name: String!
+    Description: String
+    Country: String
+    Price: Int!
+}
+
 type Mutation {
-    deleteFood(id: ID!): MenuItem!
+    createMenuItem(input: MenuItemInput!): MenuItem
 }
 
 type Query {

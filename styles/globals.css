@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --background-start-rgb: 245,245,245;
+  --background-start-rgb: 241, 241, 241;
 }
 
 body {

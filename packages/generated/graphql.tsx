@@ -28,14 +28,21 @@ export type MenuItem = {
   updatedAt: Scalars['String']['output'];
 };
 
+export type MenuItemInput = {
+  Country?: InputMaybe<Scalars['String']['input']>;
+  Description?: InputMaybe<Scalars['String']['input']>;
+  Name: Scalars['String']['input'];
+  Price: Scalars['Int']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  deleteFood: MenuItem;
+  createMenuItem?: Maybe<MenuItem>;
 };
 
 
-export type MutationDeleteFoodArgs = {
-  id: Scalars['ID']['input'];
+export type MutationCreateMenuItemArgs = {
+  input: MenuItemInput;
 };
 
 export type Query = {
@@ -48,12 +55,12 @@ export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type FoodsQuery = { __typename?: 'Query', foods?: Array<{ __typename?: 'MenuItem', id?: string | null, Name: string, Description?: string | null, Country?: string | null, Price: number } | null> | null };
 
-export type SeleteFoodMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
+export type CreateMenuItemMutationVariables = Exact<{
+  input: MenuItemInput;
 }>;
 
 
-export type SeleteFoodMutation = { __typename?: 'Mutation', deleteFood: { __typename?: 'MenuItem', Name: string } };
+export type CreateMenuItemMutation = { __typename?: 'Mutation', createMenuItem?: { __typename?: 'MenuItem', id?: string | null, Name: string, Description?: string | null, Country?: string | null, Price: number } | null };
 
 
 export const FoodsDocument = gql`
@@ -99,36 +106,40 @@ export type FoodsQueryHookResult = ReturnType<typeof useFoodsQuery>;
 export type FoodsLazyQueryHookResult = ReturnType<typeof useFoodsLazyQuery>;
 export type FoodsSuspenseQueryHookResult = ReturnType<typeof useFoodsSuspenseQuery>;
 export type FoodsQueryResult = Apollo.QueryResult<FoodsQuery, FoodsQueryVariables>;
-export const SeleteFoodDocument = gql`
-    mutation seleteFood($id: ID!) {
-  deleteFood(id: $id) {
+export const CreateMenuItemDocument = gql`
+    mutation createMenuItem($input: MenuItemInput!) {
+  createMenuItem(input: $input) {
+    id
     Name
+    Description
+    Country
+    Price
   }
 }
     `;
-export type SeleteFoodMutationFn = Apollo.MutationFunction<SeleteFoodMutation, SeleteFoodMutationVariables>;
+export type CreateMenuItemMutationFn = Apollo.MutationFunction<CreateMenuItemMutation, CreateMenuItemMutationVariables>;
 
 /**
- * __useSeleteFoodMutation__
+ * __useCreateMenuItemMutation__
  *
- * To run a mutation, you first call `useSeleteFoodMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSeleteFoodMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateMenuItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMenuItemMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [seleteFoodMutation, { data, loading, error }] = useSeleteFoodMutation({
+ * const [createMenuItemMutation, { data, loading, error }] = useCreateMenuItemMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      input: // value for 'input'
  *   },
  * });
  */
-export function useSeleteFoodMutation(baseOptions?: Apollo.MutationHookOptions<SeleteFoodMutation, SeleteFoodMutationVariables>) {
+export function useCreateMenuItemMutation(baseOptions?: Apollo.MutationHookOptions<CreateMenuItemMutation, CreateMenuItemMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SeleteFoodMutation, SeleteFoodMutationVariables>(SeleteFoodDocument, options);
+        return Apollo.useMutation<CreateMenuItemMutation, CreateMenuItemMutationVariables>(CreateMenuItemDocument, options);
       }
-export type SeleteFoodMutationHookResult = ReturnType<typeof useSeleteFoodMutation>;
-export type SeleteFoodMutationResult = Apollo.MutationResult<SeleteFoodMutation>;
-export type SeleteFoodMutationOptions = Apollo.BaseMutationOptions<SeleteFoodMutation, SeleteFoodMutationVariables>;
+export type CreateMenuItemMutationHookResult = ReturnType<typeof useCreateMenuItemMutation>;
+export type CreateMenuItemMutationResult = Apollo.MutationResult<CreateMenuItemMutation>;
+export type CreateMenuItemMutationOptions = Apollo.BaseMutationOptions<CreateMenuItemMutation, CreateMenuItemMutationVariables>;
