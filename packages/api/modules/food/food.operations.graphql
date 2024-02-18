@@ -1,12 +1,13 @@
 
-query foods {
-  foods {
+query foods($input: String!, $limit: Int!, $offset: Int!) {
+  foods(input: $input, limit: $limit, offset: $offset) {
     id
     Name
     Description
     Country
     Price
   }
+  foodsCount(input: $input)
 }
 
 mutation createMenuItem($input: MenuItemInput!) {

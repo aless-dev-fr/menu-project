@@ -1,4 +1,4 @@
-import { MenuItemInput, createMenuItem, foods } from "./food.resolver";
+import { MenuItemInput, count, createMenuItem, foods } from "./food.resolver";
 
 import { mergeTypeDefs } from "@graphql-tools/merge"
 
@@ -28,7 +28,8 @@ const typeDefs = mergeTypeDefs([
       }
     
       type Query {
-        foods: [MenuItem]
+        foods(input: String!, limit: Int!, offset: Int!): [MenuItem]
+        foodsCount(input: String!) : Int
       }
     `,
 ])
@@ -36,7 +37,8 @@ const typeDefs = mergeTypeDefs([
 
 const resolvers = {
     Query: {
-      foods
+      foods : (_ : any, { input, limit, offset } : { input : string, limit : number, offset : number }) => foods(input, limit, offset),
+      foodsCount : (_ : any, { input } : { input : string }) => count(input)
     },
     Mutation: {
       createMenuItem : (_ : any, { input } : { input : MenuItemInput }) => createMenuItem(input)

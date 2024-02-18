@@ -8,8 +8,17 @@ export interface MenuItemInput
     Price: number
 }
 
-export const foods = async () => {
-    return await prismaService.menuItem.findMany();
+export const foods = async (input : string, limit : number, offset : number) => {
+    return await prismaService.menuItem.findMany({
+        where : {
+            OR: [
+                { Name: { contains: input } },
+                { Description: { contains: input } }
+            ]
+        },
+        take: limit,
+        skip: offset
+    });
 }
 
 export const createMenuItem = async (input : MenuItemInput) => {
@@ -19,6 +28,17 @@ export const createMenuItem = async (input : MenuItemInput) => {
             Description : input.Description,
             Country : input.Country,
             Price : input.Price
+        }
+    });
+}
+
+export const count = async (input : string) => {
+    return await prismaService.menuItem.count({
+        where : {
+            OR: [
+                { Name: { contains: input } },
+                { Description: { contains: input } }
+            ]
         }
     });
 }

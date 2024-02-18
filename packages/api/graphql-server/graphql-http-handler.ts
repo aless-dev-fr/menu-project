@@ -15,7 +15,7 @@ export const schema = applyMiddleware(
         return resolve();
     }
 )
-  
+
 const GQL = new Benzene<{ req: NextApiRequest; res: NextApiResponse }>({ 
     compileQuery: makeCompileQuery(),
     schema,

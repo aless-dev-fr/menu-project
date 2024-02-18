@@ -48,12 +48,29 @@ export type MutationCreateMenuItemArgs = {
 export type Query = {
   __typename?: 'Query';
   foods?: Maybe<Array<Maybe<MenuItem>>>;
+  foodsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
+
+export type QueryFoodsArgs = {
+  input: Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+};
 
 
-export type FoodsQuery = { __typename?: 'Query', foods?: Array<{ __typename?: 'MenuItem', id?: string | null, Name: string, Description?: string | null, Country?: string | null, Price: number } | null> | null };
+export type QueryFoodsCountArgs = {
+  input: Scalars['String']['input'];
+};
+
+export type FoodsQueryVariables = Exact<{
+  input: Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+}>;
+
+
+export type FoodsQuery = { __typename?: 'Query', foodsCount?: number | null, foods?: Array<{ __typename?: 'MenuItem', id?: string | null, Name: string, Description?: string | null, Country?: string | null, Price: number } | null> | null };
 
 export type CreateMenuItemMutationVariables = Exact<{
   input: MenuItemInput;
@@ -64,14 +81,15 @@ export type CreateMenuItemMutation = { __typename?: 'Mutation', createMenuItem?:
 
 
 export const FoodsDocument = gql`
-    query foods {
-  foods {
+    query foods($input: String!, $limit: Int!, $offset: Int!) {
+  foods(input: $input, limit: $limit, offset: $offset) {
     id
     Name
     Description
     Country
     Price
   }
+  foodsCount(input: $input)
 }
     `;
 
@@ -87,10 +105,13 @@ export const FoodsDocument = gql`
  * @example
  * const { data, loading, error } = useFoodsQuery({
  *   variables: {
+ *      input: // value for 'input'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
  *   },
  * });
  */
-export function useFoodsQuery(baseOptions?: Apollo.QueryHookOptions<FoodsQuery, FoodsQueryVariables>) {
+export function useFoodsQuery(baseOptions: Apollo.QueryHookOptions<FoodsQuery, FoodsQueryVariables> & ({ variables: FoodsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<FoodsQuery, FoodsQueryVariables>(FoodsDocument, options);
       }
