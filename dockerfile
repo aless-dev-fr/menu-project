@@ -1,25 +1,19 @@
-# Use the official Node.js image with the latest LTS version
 FROM node:lts AS builder
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code to the container
 COPY . .
 
-# Build the Next.js app
 RUN npm run build
 
-# Expose port 3000
+COPY startup.sh /usr/local/bin/startup.sh
+
+RUN chmod +x /usr/local/bin/startup.sh
+
 EXPOSE 3000
 
-# Start the Next.js app
-CMD ["npm", "start"]
-
-ENTRYPOINT ["./startup.sh"]
+ENTRYPOINT ["/usr/local/bin/startup.sh"]
